@@ -36,6 +36,7 @@ const storeSchema = new mongoose.Schema({
       required: "You must supply and address!",
     },
   },
+  photo: String,
 });
 
 // needs to be a regular function and not => because we need to use "this"
