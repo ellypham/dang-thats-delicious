@@ -37,6 +37,11 @@ const storeSchema = new mongoose.Schema({
     },
   },
   photo: String,
+  author: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+    required: "You must supply and author",
+  },
 });
 
 // needs to be a regular function and not => because we need to use "this"
