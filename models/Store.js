@@ -50,6 +50,8 @@ storeSchema.index({
   description: "text",
 });
 
+storeSchema.index({ location: "2dsphere" });
+
 // needs to be a regular function and not => because we need to use "this"
 storeSchema.pre("save", async function (next) {
   // if the store's name is not modified
