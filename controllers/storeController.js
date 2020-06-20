@@ -1,6 +1,7 @@
 // in order to start working with the database, we'll need to import mongoose, package that we use to interface with our MongoDB database
 const mongoose = require("mongoose");
 const Store = mongoose.model("Store");
+const User = mongoose.model("User");
 // need reference to our store.js schema
 // rather than importing the schema from the file
 // because we imported it once from our start.js file. we can reference off of our mongoose variable. Mongo uses a concept called singleton which allows us to import our models once and then reference them anywhere in our application
@@ -161,4 +162,15 @@ exports.mapStores = async (req, res) => {
 
 exports.mapPage = (req, res) => {
   res.render("map", { title: "Map" });
+};
+
+exports.heartStore = async (req, res) => {
+  const hearts = req.user.hearts.map((obj) => obj.toString());
+  const operator = hearts.includes(req.params.id) ? "$pull" : "$addToSet";
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    { [operator]: { hearts: req.params.id } },
+    { new: true }
+  );
+  res.json(user);
 };
